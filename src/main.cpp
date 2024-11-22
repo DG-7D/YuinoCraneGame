@@ -39,6 +39,9 @@ const uint16_t MICROS_SERVO_XY_FORWARD = MICROS_SERVO_XY_STOP + MICROS_SERVO_XY_
 const uint16_t MICROS_SERVO_Z_UP = MICROS_SERVO_Z_STOP - MICROS_SERVO_Z_MOVE;
 const uint16_t MICROS_SERVO_Z_DOWN = MICROS_SERVO_Z_STOP + MICROS_SERVO_Z_MOVE;
 
+uint16_t positionX = 0;
+uint16_t positionY = 0;
+
 Servo servoX;
 Servo servoY;
 Servo servoZ;
@@ -97,12 +100,14 @@ void controlXY() {
     while (millis() - startMillis < MILLIS_TIMEOUT) {
         if (digitalRead(PIN_BUTTON_X) == LOW && digitalRead(PIN_LIMIT_SWITCH_X_END) == HIGH) {
             servoX.writeMicroseconds(MICROS_SERVO_XY_FORWARD);
+            positionX += 1;
         } else {
             servoX.writeMicroseconds(MICROS_SERVO_XY_STOP);
         }
 
         if (digitalRead(PIN_BUTTON_Y) == LOW && digitalRead(PIN_LIMIT_SWITCH_Y_END) == HIGH) {
             servoY.writeMicroseconds(MICROS_SERVO_XY_FORWARD);
+            positionY += 1;
         } else {
             servoY.writeMicroseconds(MICROS_SERVO_XY_BACK);
         }
@@ -128,18 +133,21 @@ void catchObject() {
 
 void goHome() {
     Serial.println("goHome");
-    servoX.writeMicroseconds(MICROS_SERVO_XY_BACK);
-    servoY.writeMicroseconds(MICROS_SERVO_XY_BACK);
-    bool isXHome = false;
-    bool isYHome = false;
-    while (!isXHome || !isYHome) {
-        if (!isXHome && digitalRead(PIN_LIMIT_SWITCH_X_START) == LOW) {
+    if (positionX > positionY) {
+        servoX.writeMicroseconds(MICROS_SERVO_XY_STOP - MICROS_SERVO_XY_MOVE);
+        servoY.writeMicroseconds(MICROS_SERVO_XY_STOP - MICROS_SERVO_XY_MOVE * positionY / positionX);
+    } else {
+        servoX.writeMicroseconds(MICROS_SERVO_XY_STOP - MICROS_SERVO_XY_MOVE * positionX / positionY);
+        servoY.writeMicroseconds(MICROS_SERVO_XY_STOP - MICROS_SERVO_XY_MOVE);
+    }
+    while (positionX != 0 && positionY != 0) {
+        if (positionX != 0 && digitalRead(PIN_LIMIT_SWITCH_X_START) == LOW) {
             servoX.writeMicroseconds(MICROS_SERVO_XY_STOP);
-            isXHome = true;
+            positionX = 0;
         }
-        if (!isYHome && digitalRead(PIN_LIMIT_SWITCH_Y_START) == LOW) {
+        if (positionY != 0 && digitalRead(PIN_LIMIT_SWITCH_Y_START) == LOW) {
             servoY.writeMicroseconds(MICROS_SERVO_XY_STOP);
-            isYHome = true;
+            positionY = 0;
         }
         delay(MILLIS_POLLING_INTERVAL);
     }
