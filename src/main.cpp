@@ -92,6 +92,7 @@ void waitForButton() {
 
 void controlXY() {
     Serial.println("controlXY");
+    digitalWrite(PIN_CONTROL_ENABLED, HIGH);
     const unsigned long startMillis = millis();
     while (millis() - startMillis < MILLIS_TIMEOUT) {
         if (digitalRead(PIN_BUTTON_X) == LOW && digitalRead(PIN_LIMIT_SWITCH_X_START) == HIGH) {
@@ -107,6 +108,7 @@ void controlXY() {
         }
         delay(MILLIS_POLLING_INTERVAL);
     }
+    digitalWrite(PIN_CONTROL_ENABLED, LOW);
 }
 
 void catchObject() {
