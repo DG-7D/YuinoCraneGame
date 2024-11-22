@@ -34,7 +34,6 @@ const uint16_t MILLIS_Z_MOVE = 2000;
 const uint16_t MILLIS_ARM_MOVE = 1000;
 
 // 定数計算
-const uint16_t MICROS_SERVO_XY_BACK = MICROS_SERVO_XY_STOP - MICROS_SERVO_XY_MOVE;
 const uint16_t MICROS_SERVO_XY_FORWARD = MICROS_SERVO_XY_STOP + MICROS_SERVO_XY_MOVE;
 const uint16_t MICROS_SERVO_Z_UP = MICROS_SERVO_Z_STOP - MICROS_SERVO_Z_MOVE;
 const uint16_t MICROS_SERVO_Z_DOWN = MICROS_SERVO_Z_STOP + MICROS_SERVO_Z_MOVE;
@@ -109,7 +108,7 @@ void controlXY() {
             servoY.writeMicroseconds(MICROS_SERVO_XY_FORWARD);
             positionY += 1;
         } else {
-            servoY.writeMicroseconds(MICROS_SERVO_XY_BACK);
+            servoY.writeMicroseconds(MICROS_SERVO_XY_STOP);
         }
         delay(MILLIS_POLLING_INTERVAL);
     }
