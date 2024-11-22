@@ -95,13 +95,13 @@ void controlXY() {
     digitalWrite(PIN_CONTROL_ENABLED, HIGH);
     const unsigned long startMillis = millis();
     while (millis() - startMillis < MILLIS_TIMEOUT) {
-        if (digitalRead(PIN_BUTTON_X) == LOW && digitalRead(PIN_LIMIT_SWITCH_X_START) == HIGH) {
+        if (digitalRead(PIN_BUTTON_X) == LOW && digitalRead(PIN_LIMIT_SWITCH_X_END) == HIGH) {
             servoX.writeMicroseconds(MICROS_SERVO_XY_FORWARD);
         } else {
             servoX.writeMicroseconds(MICROS_SERVO_XY_STOP);
         }
 
-        if (digitalRead(PIN_BUTTON_Y) == LOW && digitalRead(PIN_LIMIT_SWITCH_Y_START) == HIGH) {
+        if (digitalRead(PIN_BUTTON_Y) == LOW && digitalRead(PIN_LIMIT_SWITCH_Y_END) == HIGH) {
             servoY.writeMicroseconds(MICROS_SERVO_XY_FORWARD);
         } else {
             servoY.writeMicroseconds(MICROS_SERVO_XY_BACK);
@@ -137,7 +137,7 @@ void goHome() {
             servoX.writeMicroseconds(MICROS_SERVO_XY_STOP);
             isXHome = true;
         }
-        if (!isYHome && (PIN_LIMIT_SWITCH_Y_START) == LOW) {
+        if (!isYHome && digitalRead(PIN_LIMIT_SWITCH_Y_START) == LOW) {
             servoY.writeMicroseconds(MICROS_SERVO_XY_STOP);
             isYHome = true;
         }
