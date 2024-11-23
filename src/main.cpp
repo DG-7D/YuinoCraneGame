@@ -28,7 +28,6 @@ const uint8_t DEGREE_SERVO_ARM_CLOSE_MIN = 0;
 const uint8_t DEGREE_SERVO_ARM_CLOSE_MAX = 10;
 const uint8_t DEGREE_SERVO_ARM_OPEN = 45;
 // 時間設定
-const uint16_t MILLIS_POLLING_INTERVAL = 1000 / 60;
 const uint16_t MILLIS_TIMEOUT = 10000;
 const uint16_t MILLIS_Z_MOVE = 2000;
 const uint16_t MILLIS_ARM_MOVE = 1000;
@@ -78,15 +77,13 @@ void loop() {
 
 void waitForActivate() {
     Serial.println("waitForActivate");
-    while (digitalRead(PIN_ACTIVATE) == HIGH) {
-        delay(MILLIS_POLLING_INTERVAL);
+    while (digitalRead(PIN_ACTIVATE) != LOW) {
     }
 }
 
 void waitForButton() {
     Serial.println("waitForButton");
     while (digitalRead(PIN_BUTTON_X) != LOW && digitalRead(PIN_BUTTON_Y) != LOW) {
-        delay(MILLIS_POLLING_INTERVAL);
     }
 }
 
@@ -95,18 +92,17 @@ void controlXY() {
     digitalWrite(PIN_CONTROL_ENABLED, HIGH);
     const unsigned long startMillis = millis();
     while (millis() - startMillis < MILLIS_TIMEOUT) {
-        if (digitalRead(PIN_BUTTON_X) == LOW && digitalRead(PIN_LIMIT_SWITCH_X_END) == HIGH) {
+        if (digitalRead(PIN_BUTTON_X) == LOW && digitalRead(PIN_LIMIT_SWITCH_X_END) != LOW) {
             servoX.writeMicroseconds(MICROS_SERVO_XY_FORWARD);
         } else {
             servoX.writeMicroseconds(MICROS_SERVO_XY_STOP);
         }
 
-        if (digitalRead(PIN_BUTTON_Y) == LOW && digitalRead(PIN_LIMIT_SWITCH_Y_END) == HIGH) {
+        if (digitalRead(PIN_BUTTON_Y) == LOW && digitalRead(PIN_LIMIT_SWITCH_Y_END) != LOW) {
             servoY.writeMicroseconds(MICROS_SERVO_XY_FORWARD);
         } else {
             servoY.writeMicroseconds(MICROS_SERVO_XY_STOP);
         }
-        delay(MILLIS_POLLING_INTERVAL);
     }
     servoX.writeMicroseconds(MICROS_SERVO_XY_STOP);
     servoY.writeMicroseconds(MICROS_SERVO_XY_STOP);
@@ -143,7 +139,6 @@ void goHome() {
             servoY.writeMicroseconds(MICROS_SERVO_XY_STOP);
             isYHome = true;
         }
-        delay(MILLIS_POLLING_INTERVAL);
     }
 }
 
