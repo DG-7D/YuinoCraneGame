@@ -30,7 +30,7 @@ const uint8_t DEGREE_SERVO_ARM_OPEN = 45;
 // 時間設定
 const uint16_t MILLIS_TIMEOUT = 10000;
 const uint16_t MILLIS_Z_MOVE = 2000;
-const uint16_t MILLIS_ARM_MOVE = 1000;
+const uint16_t MILLIS_ARM_MOVE_INTERVAL = 500;
 
 // 定数計算
 const uint16_t MICROS_SERVO_XY_FORWARD = MICROS_SERVO_XY_STOP + MICROS_SERVO_XY_MOVE;
@@ -70,8 +70,11 @@ void loop() {
     waitForActivate();
     waitForButton();
     controlXY();
+    delay(500);
     catchObject();
+    delay(1000);
     goHome();
+    delay(1000);
     releaseObject();
 }
 
@@ -116,8 +119,11 @@ void catchObject() {
     servoZ.writeMicroseconds(MICROS_SERVO_Z_STOP);
 
     uint8_t DEGREE_SERVO_ARM_CLOSE = random(DEGREE_SERVO_ARM_CLOSE_MIN, DEGREE_SERVO_ARM_CLOSE_MAX);
+    delay(MILLIS_ARM_MOVE_INTERVAL);
+    servoArm.write(DEGREE_SERVO_ARM_CLOSE / 2);
+    delay(MILLIS_ARM_MOVE_INTERVAL);
     servoArm.write(DEGREE_SERVO_ARM_CLOSE);
-    delay(MILLIS_ARM_MOVE);
+    delay(MILLIS_ARM_MOVE_INTERVAL);
 
     servoZ.writeMicroseconds(MICROS_SERVO_Z_UP);
     delay(MILLIS_Z_MOVE);
