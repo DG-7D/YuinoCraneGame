@@ -85,7 +85,7 @@ void waitForActivate() {
 
 void waitForButton() {
     Serial.println("waitForButton");
-    while (!digitalRead(PIN_BUTTON_X) && !digitalRead(PIN_BUTTON_Y)) {
+    while (digitalRead(PIN_BUTTON_X) != LOW && digitalRead(PIN_BUTTON_Y) != LOW) {
         delay(MILLIS_POLLING_INTERVAL);
     }
 }
