@@ -4,21 +4,21 @@
 
 // ピン設定
 //     ボタン入力
-const uint8_t PIN_BUTTON_X = 19;
-const uint8_t PIN_BUTTON_Y = 18;
-const uint8_t PIN_ACTIVATE = 32;
+const uint8_t PIN_BUTTON_X = 27;
+const uint8_t PIN_BUTTON_Y = 14;
+const uint8_t PIN_ACTIVATE = 12;
 //     リミットスイッチ入力
-const uint8_t PIN_LIMIT_SWITCH_X_START = 33;
-const uint8_t PIN_LIMIT_SWITCH_X_END = 25;
-const uint8_t PIN_LIMIT_SWITCH_Y_START = 26;
-const uint8_t PIN_LIMIT_SWITCH_Y_END = 27;
+const uint8_t PIN_LIMIT_SWITCH_X_START = 32;
+const uint8_t PIN_LIMIT_SWITCH_X_END = 33;
+const uint8_t PIN_LIMIT_SWITCH_Y_START = 25;
+const uint8_t PIN_LIMIT_SWITCH_Y_END = 26;
 //     サーボ出力
-const uint8_t PIN_SERVO_X = 23;
-const uint8_t PIN_SERVO_Y = 22;
-const uint8_t PIN_SERVO_Z = 1;
-const uint8_t PIN_SERVO_ARM = 3;
+const uint8_t PIN_SERVO_X = 19;
+const uint8_t PIN_SERVO_Y = 18;
+const uint8_t PIN_SERVO_Z = 5;
+const uint8_t PIN_SERVO_ARM = 17;
 //     信号出力
-const uint8_t PIN_CONTROL_ENABLED = 21;
+const uint8_t PIN_CONTROL_ENABLED = 4;
 // サーボ設定
 const uint16_t MICROS_SERVO_XY_STOP = 1500;
 const uint16_t MICROS_SERVO_XY_MOVE = 100;
@@ -134,9 +134,17 @@ void goHome() {
     Serial.println("goHome");
     if (positionX > positionY) {
         servoX.writeMicroseconds(MICROS_SERVO_XY_STOP - MICROS_SERVO_XY_MOVE);
-        servoY.writeMicroseconds(MICROS_SERVO_XY_STOP - MICROS_SERVO_XY_MOVE * positionY / positionX);
+        if (positionX != 0) {
+            servoY.writeMicroseconds(MICROS_SERVO_XY_STOP - MICROS_SERVO_XY_MOVE * positionY / positionX);
+        } else {
+            servoY.writeMicroseconds(MICROS_SERVO_XY_STOP - MICROS_SERVO_XY_MOVE);
+        }
     } else {
-        servoX.writeMicroseconds(MICROS_SERVO_XY_STOP - MICROS_SERVO_XY_MOVE * positionX / positionY);
+        if (positionY != 0) {
+            servoX.writeMicroseconds(MICROS_SERVO_XY_STOP - MICROS_SERVO_XY_MOVE * positionX / positionY);
+        } else {
+            servoX.writeMicroseconds(MICROS_SERVO_XY_STOP - MICROS_SERVO_XY_MOVE);
+        }
         servoY.writeMicroseconds(MICROS_SERVO_XY_STOP - MICROS_SERVO_XY_MOVE);
     }
     while (positionX != 0 && positionY != 0) {
