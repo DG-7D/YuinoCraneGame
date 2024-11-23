@@ -134,6 +134,7 @@ void catchObject() {
 
 void goHome() {
     Serial.println("goHome");
+    Serial.printf("positionX: %d, positionY: %d\n", positionX, positionY);
     if (positionX > positionY) {
         servoX.writeMicroseconds(MICROS_SERVO_XY_STOP - MICROS_SERVO_XY_MOVE);
         if (positionX != 0) {
@@ -149,7 +150,7 @@ void goHome() {
         }
         servoY.writeMicroseconds(MICROS_SERVO_XY_STOP - MICROS_SERVO_XY_MOVE);
     }
-    while (positionX != 0 && positionY != 0) {
+    while (positionX != 0 || positionY != 0) {
         if (positionX != 0 && digitalRead(PIN_LIMIT_SWITCH_X_START) == LOW) {
             servoX.writeMicroseconds(MICROS_SERVO_XY_STOP);
             positionX = 0;
@@ -160,6 +161,7 @@ void goHome() {
         }
         delay(MILLIS_POLLING_INTERVAL);
     }
+    Serial.printf("positionX: %d, positionY: %d\n", positionX, positionY);
 }
 
 void releaseObject() {
