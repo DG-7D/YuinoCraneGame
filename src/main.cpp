@@ -112,6 +112,8 @@ void controlXY() {
         }
         delay(MILLIS_POLLING_INTERVAL);
     }
+    servoX.writeMicroseconds(MICROS_SERVO_XY_STOP);
+    servoY.writeMicroseconds(MICROS_SERVO_XY_STOP);
     digitalWrite(PIN_CONTROL_ENABLED, LOW);
 }
 
