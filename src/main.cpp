@@ -29,8 +29,8 @@ const uint8_t DEGREE_SERVO_ARM_CLOSE_MAX = 5;
 const uint8_t DEGREE_SERVO_ARM_OPEN = 45;
 // 時間設定
 const uint16_t MILLIS_TIMEOUT = 10000;
-const uint16_t MILLIS_Z_DOWN = 3000;
-const uint16_t MILLIS_Z_UP = 3700;
+const uint16_t MILLIS_Z_DOWN = 2500;
+const uint16_t MILLIS_Z_UP = 3300;
 const uint16_t MILLIS_ARM_MOVE_INTERVAL = 500;
 
 // 定数計算
