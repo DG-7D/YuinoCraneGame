@@ -25,7 +25,7 @@ const int16_t MICROS_SERVO_X_MOVE = 100;
 const int16_t MICROS_SERVO_Y_MOVE = -100;
 const uint16_t MICROS_SERVO_Z_MOVE = 100;
 const uint8_t DEGREE_SERVO_ARM_CLOSE_MIN = 0;
-const uint8_t DEGREE_SERVO_ARM_CLOSE_MAX = 10;
+const uint8_t DEGREE_SERVO_ARM_CLOSE_MAX = 5;
 const uint8_t DEGREE_SERVO_ARM_OPEN = 45;
 // 時間設定
 const uint16_t MILLIS_TIMEOUT = 10000;
