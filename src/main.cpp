@@ -12,6 +12,7 @@ const uint8_t PIN_LIMIT_SWITCH_X_START = 32;
 const uint8_t PIN_LIMIT_SWITCH_X_END = 33;
 const uint8_t PIN_LIMIT_SWITCH_Y_START = 25;
 const uint8_t PIN_LIMIT_SWITCH_Y_END = 26;
+const uint8_t PIN_LIMIT_SWITCH_Z_TOP = 13;
 //     サーボ出力
 const uint8_t PIN_SERVO_X = 19;
 const uint8_t PIN_SERVO_Y = 18;
@@ -57,6 +58,7 @@ void setup() {
     pinMode(PIN_LIMIT_SWITCH_X_END, INPUT_PULLUP);
     pinMode(PIN_LIMIT_SWITCH_Y_START, INPUT_PULLUP);
     pinMode(PIN_LIMIT_SWITCH_Y_END, INPUT_PULLUP);
+    pinMode(PIN_LIMIT_SWITCH_Z_TOP, INPUT_PULLUP);
 
     servoX.attach(PIN_SERVO_X);
     servoY.attach(PIN_SERVO_Y);
@@ -74,7 +76,7 @@ void loop() {
     waitForButton();
     controlXY();
     delay(500);
-    catchObject();
+    catchObject(1);
     delay(1000);
     goHome();
     delay(1000);
@@ -115,7 +117,7 @@ void controlXY() {
     digitalWrite(PIN_CONTROL_ENABLED, LOW);
 }
 
-void catchObject() {
+void catchObject(uint8_t mode) {
     Serial.println("catchObject");
     servoZ.writeMicroseconds(MICROS_SERVO_Z_DOWN);
     delay(MILLIS_Z_DOWN);
@@ -129,7 +131,12 @@ void catchObject() {
     delay(MILLIS_ARM_MOVE_INTERVAL);
 
     servoZ.writeMicroseconds(MICROS_SERVO_Z_UP);
-    delay(MILLIS_Z_UP);
+    if (mode == 0) {
+        delay(MILLIS_Z_UP);
+    } else if (mode == 1) {
+        while (digitalRead(PIN_LIMIT_SWITCH_Z_TOP) != LOW) {
+        }
+    }
     servoZ.writeMicroseconds(MICROS_SERVO_STOP);
 }
 
