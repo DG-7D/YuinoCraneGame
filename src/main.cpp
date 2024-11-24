@@ -29,7 +29,8 @@ const uint8_t DEGREE_SERVO_ARM_CLOSE_MAX = 10;
 const uint8_t DEGREE_SERVO_ARM_OPEN = 45;
 // 時間設定
 const uint16_t MILLIS_TIMEOUT = 10000;
-const uint16_t MILLIS_Z_MOVE = 2000;
+const uint16_t MILLIS_Z_DOWN = 3000;
+const uint16_t MILLIS_Z_UP = 3800;
 const uint16_t MILLIS_ARM_MOVE_INTERVAL = 500;
 
 // 定数計算
@@ -117,18 +118,18 @@ void controlXY() {
 void catchObject() {
     Serial.println("catchObject");
     servoZ.writeMicroseconds(MICROS_SERVO_Z_DOWN);
-    delay(MILLIS_Z_MOVE);
+    delay(MILLIS_Z_DOWN);
     servoZ.writeMicroseconds(MICROS_SERVO_STOP);
 
     uint8_t DEGREE_SERVO_ARM_CLOSE = random(DEGREE_SERVO_ARM_CLOSE_MIN, DEGREE_SERVO_ARM_CLOSE_MAX);
     delay(MILLIS_ARM_MOVE_INTERVAL);
-    servoArm.write(DEGREE_SERVO_ARM_CLOSE / 2);
+    servoArm.write(DEGREE_SERVO_ARM_OPEN / 2);
     delay(MILLIS_ARM_MOVE_INTERVAL);
     servoArm.write(DEGREE_SERVO_ARM_CLOSE);
     delay(MILLIS_ARM_MOVE_INTERVAL);
 
     servoZ.writeMicroseconds(MICROS_SERVO_Z_UP);
-    delay(MILLIS_Z_MOVE);
+    delay(MILLIS_Z_UP);
     servoZ.writeMicroseconds(MICROS_SERVO_STOP);
 }
 
