@@ -30,8 +30,8 @@ const uint8_t DEGREE_SERVO_ARM_CLOSE_MAX = 5;
 const uint8_t DEGREE_SERVO_ARM_OPEN = 45;
 // 時間設定
 const uint16_t MILLIS_TIMEOUT = 10000;
-const uint16_t MILLIS_Z_DOWN = 2500;
-const uint16_t MILLIS_Z_UP = 3300;
+const uint16_t MILLIS_Z_DOWN = 2800;
+const uint16_t MILLIS_Z_UP = 3500;
 const uint16_t MILLIS_ARM_MOVE_INTERVAL = 500;
 
 // 定数計算
@@ -66,6 +66,7 @@ void setup() {
     servoArm.attach(PIN_SERVO_ARM);
     pinMode(PIN_CONTROL_ENABLED, OUTPUT);
 
+    upArm();
     goHome();
     releaseObject();
 }
@@ -76,7 +77,7 @@ void loop() {
     waitForButton();
     controlXY();
     delay(500);
-    catchObject(1);
+    catchObject();
     delay(1000);
     goHome();
     delay(1000);
@@ -117,7 +118,7 @@ void controlXY() {
     digitalWrite(PIN_CONTROL_ENABLED, LOW);
 }
 
-void catchObject(uint8_t mode) {
+void catchObject() {
     Serial.println("catchObject");
     servoZ.writeMicroseconds(MICROS_SERVO_Z_DOWN);
     delay(MILLIS_Z_DOWN);
@@ -130,12 +131,15 @@ void catchObject(uint8_t mode) {
     servoArm.write(DEGREE_SERVO_ARM_CLOSE);
     delay(MILLIS_ARM_MOVE_INTERVAL);
 
+    upArm();
+}
+
+void upArm() {
+    Serial.println("upArm");
     servoZ.writeMicroseconds(MICROS_SERVO_Z_UP);
-    if (mode == 0) {
-        delay(MILLIS_Z_UP);
-    } else if (mode == 1) {
-        while (digitalRead(PIN_LIMIT_SWITCH_Z_TOP) != LOW) {
-        }
+
+    unsigned long startMillis = millis();
+    while (digitalRead(PIN_LIMIT_SWITCH_Z_TOP) != LOW && millis() - startMillis < MILLIS_Z_UP) {
     }
     servoZ.writeMicroseconds(MICROS_SERVO_STOP);
 }

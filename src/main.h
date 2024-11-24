@@ -8,7 +8,8 @@ void loop();
 void waitForActivate();
 void waitForButton();
 void controlXY();
-void catchObject(uint8_t mode);
+void catchObject();
+void upArm();
 void goHome();
 void releaseObject();
 
