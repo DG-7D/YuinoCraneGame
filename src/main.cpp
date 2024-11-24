@@ -20,9 +20,9 @@ const uint8_t PIN_SERVO_ARM = 17;
 //     信号出力
 const uint8_t PIN_CONTROL_ENABLED = 4;
 // サーボ設定
-const uint16_t MICROS_SERVO_XY_STOP = 1500;
-const uint16_t MICROS_SERVO_XY_MOVE = 100;
-const uint16_t MICROS_SERVO_Z_STOP = 1500;
+const uint16_t MICROS_SERVO_STOP = 1500;
+const int16_t MICROS_SERVO_X_MOVE = 100;
+const int16_t MICROS_SERVO_Y_MOVE = -100;
 const uint16_t MICROS_SERVO_Z_MOVE = 100;
 const uint8_t DEGREE_SERVO_ARM_CLOSE_MIN = 0;
 const uint8_t DEGREE_SERVO_ARM_CLOSE_MAX = 10;
@@ -33,10 +33,12 @@ const uint16_t MILLIS_Z_MOVE = 2000;
 const uint16_t MILLIS_ARM_MOVE_INTERVAL = 500;
 
 // 定数計算
-const uint16_t MICROS_SERVO_XY_FORWARD = MICROS_SERVO_XY_STOP + MICROS_SERVO_XY_MOVE;
-const uint16_t MICROS_SERVO_XY_BACKWARD = MICROS_SERVO_XY_STOP - MICROS_SERVO_XY_MOVE;
-const uint16_t MICROS_SERVO_Z_UP = MICROS_SERVO_Z_STOP - MICROS_SERVO_Z_MOVE;
-const uint16_t MICROS_SERVO_Z_DOWN = MICROS_SERVO_Z_STOP + MICROS_SERVO_Z_MOVE;
+const uint16_t MICROS_SERVO_X_FORWARD = MICROS_SERVO_STOP + MICROS_SERVO_X_MOVE;
+const uint16_t MICROS_SERVO_X_BACKWARD = MICROS_SERVO_STOP - MICROS_SERVO_X_MOVE;
+const uint16_t MICROS_SERVO_Y_FORWARD = MICROS_SERVO_STOP + MICROS_SERVO_Y_MOVE;
+const uint16_t MICROS_SERVO_Y_BACKWARD = MICROS_SERVO_STOP - MICROS_SERVO_Y_MOVE;
+const uint16_t MICROS_SERVO_Z_UP = MICROS_SERVO_STOP - MICROS_SERVO_Z_MOVE;
+const uint16_t MICROS_SERVO_Z_DOWN = MICROS_SERVO_STOP + MICROS_SERVO_Z_MOVE;
 
 Servo servoX;
 Servo servoY;
@@ -96,19 +98,19 @@ void controlXY() {
     const unsigned long startMillis = millis();
     while (millis() - startMillis < MILLIS_TIMEOUT) {
         if (digitalRead(PIN_BUTTON_X) == LOW && digitalRead(PIN_LIMIT_SWITCH_X_END) != LOW) {
-            servoX.writeMicroseconds(MICROS_SERVO_XY_FORWARD);
+            servoX.writeMicroseconds(MICROS_SERVO_X_FORWARD);
         } else {
-            servoX.writeMicroseconds(MICROS_SERVO_XY_STOP);
+            servoX.writeMicroseconds(MICROS_SERVO_STOP);
         }
 
         if (digitalRead(PIN_BUTTON_Y) == LOW && digitalRead(PIN_LIMIT_SWITCH_Y_END) != LOW) {
-            servoY.writeMicroseconds(MICROS_SERVO_XY_FORWARD);
+            servoY.writeMicroseconds(MICROS_SERVO_Y_FORWARD);
         } else {
-            servoY.writeMicroseconds(MICROS_SERVO_XY_STOP);
+            servoY.writeMicroseconds(MICROS_SERVO_STOP);
         }
     }
-    servoX.writeMicroseconds(MICROS_SERVO_XY_STOP);
-    servoY.writeMicroseconds(MICROS_SERVO_XY_STOP);
+    servoX.writeMicroseconds(MICROS_SERVO_STOP);
+    servoY.writeMicroseconds(MICROS_SERVO_STOP);
     digitalWrite(PIN_CONTROL_ENABLED, LOW);
 }
 
@@ -116,7 +118,7 @@ void catchObject() {
     Serial.println("catchObject");
     servoZ.writeMicroseconds(MICROS_SERVO_Z_DOWN);
     delay(MILLIS_Z_MOVE);
-    servoZ.writeMicroseconds(MICROS_SERVO_Z_STOP);
+    servoZ.writeMicroseconds(MICROS_SERVO_STOP);
 
     uint8_t DEGREE_SERVO_ARM_CLOSE = random(DEGREE_SERVO_ARM_CLOSE_MIN, DEGREE_SERVO_ARM_CLOSE_MAX);
     delay(MILLIS_ARM_MOVE_INTERVAL);
@@ -127,22 +129,22 @@ void catchObject() {
 
     servoZ.writeMicroseconds(MICROS_SERVO_Z_UP);
     delay(MILLIS_Z_MOVE);
-    servoZ.writeMicroseconds(MICROS_SERVO_Z_STOP);
+    servoZ.writeMicroseconds(MICROS_SERVO_STOP);
 }
 
 void goHome() {
     Serial.println("goHome");
-    servoX.writeMicroseconds(MICROS_SERVO_XY_BACKWARD);
-    servoY.writeMicroseconds(MICROS_SERVO_XY_BACKWARD);
+    servoX.writeMicroseconds(MICROS_SERVO_X_BACKWARD);
+    servoY.writeMicroseconds(MICROS_SERVO_Y_BACKWARD);
     bool isXHome = false;
     bool isYHome = false;
     while (!(isXHome && isYHome)) {
         if (!isXHome && digitalRead(PIN_LIMIT_SWITCH_X_START) == LOW) {
-            servoX.writeMicroseconds(MICROS_SERVO_XY_STOP);
+            servoX.writeMicroseconds(MICROS_SERVO_STOP);
             isXHome = true;
         }
         if (!isYHome && digitalRead(PIN_LIMIT_SWITCH_Y_START) == LOW) {
-            servoY.writeMicroseconds(MICROS_SERVO_XY_STOP);
+            servoY.writeMicroseconds(MICROS_SERVO_STOP);
             isYHome = true;
         }
     }
