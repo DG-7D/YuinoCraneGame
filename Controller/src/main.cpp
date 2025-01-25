@@ -3,10 +3,6 @@
 #include <main.h>
 
 // ピン設定
-//     ボタン入力
-const uint8_t PIN_BUTTON_X = 27;
-const uint8_t PIN_BUTTON_Y = 14;
-const uint8_t PIN_ACTIVATE = 12;
 //     リミットスイッチ入力
 const uint8_t PIN_LIMIT_SWITCH_X_START = 32;
 const uint8_t PIN_LIMIT_SWITCH_X_END = 33;
@@ -14,12 +10,11 @@ const uint8_t PIN_LIMIT_SWITCH_Y_START = 25;
 const uint8_t PIN_LIMIT_SWITCH_Y_END = 26;
 const uint8_t PIN_LIMIT_SWITCH_Z_TOP = 13;
 //     サーボ出力
-const uint8_t PIN_SERVO_X = 19;
+const uint8_t PIN_SERVO_X = 16;
 const uint8_t PIN_SERVO_Y = 18;
 const uint8_t PIN_SERVO_Z = 5;
 const uint8_t PIN_SERVO_ARM = 17;
-//     信号出力
-const uint8_t PIN_CONTROL_ENABLED = 4;
+
 // サーボ設定
 const uint16_t MICROS_SERVO_STOP = 1500;
 const int16_t MICROS_SERVO_X_MOVE = 100;
@@ -28,11 +23,9 @@ const uint16_t MICROS_SERVO_Z_MOVE = 100;
 const uint8_t DEGREE_SERVO_ARM_CLOSE_MIN = 0;
 const uint8_t DEGREE_SERVO_ARM_CLOSE_MAX = 5;
 const uint8_t DEGREE_SERVO_ARM_OPEN = 45;
+
 // 時間設定
-const uint16_t MILLIS_TIMEOUT = 10000;
-const uint16_t MILLIS_Z_DOWN = 2800;
-const uint16_t MILLIS_Z_UP = 3500;
-const uint16_t MILLIS_ARM_MOVE_INTERVAL = 500;
+const unsigned long COMMAND_LIFETIME = 500;
 
 // 定数計算
 const uint16_t MICROS_SERVO_X_FORWARD = MICROS_SERVO_STOP + MICROS_SERVO_X_MOVE;
@@ -47,13 +40,13 @@ Servo servoY;
 Servo servoZ;
 Servo servoArm;
 
+unsigned long lastCommandTime = 0;
+bool isCommandActive = false;
+
 void setup() {
     Serial.begin(9600);
     Serial.println("setup");
 
-    pinMode(PIN_BUTTON_X, INPUT_PULLUP);
-    pinMode(PIN_BUTTON_Y, INPUT_PULLUP);
-    pinMode(PIN_ACTIVATE, INPUT_PULLUP);
     pinMode(PIN_LIMIT_SWITCH_X_START, INPUT_PULLUP);
     pinMode(PIN_LIMIT_SWITCH_X_END, INPUT_PULLUP);
     pinMode(PIN_LIMIT_SWITCH_Y_START, INPUT_PULLUP);
@@ -64,105 +57,78 @@ void setup() {
     servoY.attach(PIN_SERVO_Y);
     servoZ.attach(PIN_SERVO_Z);
     servoArm.attach(PIN_SERVO_ARM);
-    pinMode(PIN_CONTROL_ENABLED, OUTPUT);
 
-    upArm();
-    goHome();
-    releaseObject();
+    execCommand("0,0,0,0");
+}
+
+void execCommand(String command) {
+    int values[4] = {0, 0, 0, 0};
+    int index = 0;
+    int startPos = 0;
+
+    for (int i = 0; i < command.length(); i++) {
+        if (command.charAt(i) == ',') {
+            values[index] = command.substring(startPos, i).toInt();
+            index++;
+            startPos = i + 1;
+        }
+    }
+    values[index] = command.substring(startPos).toInt();
+
+    if (values[0] == -1 && digitalRead(PIN_LIMIT_SWITCH_X_START) != LOW) {
+        servoX.writeMicroseconds(MICROS_SERVO_X_BACKWARD);
+        // Serial.print("X-, ");
+    } else if (values[0] == 1 && digitalRead(PIN_LIMIT_SWITCH_X_END) != LOW) {
+        servoX.writeMicroseconds(MICROS_SERVO_X_FORWARD);
+        // Serial.print("X+, ");
+    } else {
+        servoX.writeMicroseconds(MICROS_SERVO_STOP);
+        // Serial.print("X0, ");
+    }
+
+    if (values[1] == -1 && digitalRead(PIN_LIMIT_SWITCH_Y_START) != LOW) {
+        servoY.writeMicroseconds(MICROS_SERVO_Y_BACKWARD);
+        // Serial.print("Y-, ");
+    } else if (values[1] == 1 && digitalRead(PIN_LIMIT_SWITCH_Y_END) != LOW) {
+        servoY.writeMicroseconds(MICROS_SERVO_Y_FORWARD);
+        // Serial.print("Y+, ");
+    } else {
+        servoY.writeMicroseconds(MICROS_SERVO_STOP);
+        // Serial.print("Y0, ");
+    }
+
+    if (values[2] == -1) {
+        servoZ.writeMicroseconds(MICROS_SERVO_Z_DOWN);
+        // Serial.print("Z-, ");
+    } else if (values[2] == 1 && digitalRead(PIN_LIMIT_SWITCH_Z_TOP) != LOW) {
+        servoZ.writeMicroseconds(MICROS_SERVO_Z_UP);
+        // Serial.print("Z+, ");
+    } else {
+        servoZ.writeMicroseconds(MICROS_SERVO_STOP);
+        // Serial.print("Z0, ");
+    }
+
+    if (values[3] == 1) {
+        servoArm.write(DEGREE_SERVO_ARM_CLOSE_MIN);
+        // Serial.print("AO, ");
+    } else {
+        servoArm.write(DEGREE_SERVO_ARM_OPEN);
+        // Serial.print("AC, ");
+    }
+
+    // Serial.println();
+    while (Serial.available()) Serial.read();
 }
 
 void loop() {
-    Serial.println("loop");
-    waitForActivate();
-    waitForButton();
-    controlXY();
-    delay(500);
-    catchObject();
-    delay(1000);
-    goHome();
-    delay(1000);
-    releaseObject();
-}
-
-void waitForActivate() {
-    Serial.println("waitForActivate");
-    while (digitalRead(PIN_ACTIVATE) != LOW) {
+    String data = Serial.readString();
+    if (data) {
+        lastCommandTime = millis();
+        isCommandActive = true;
+        execCommand(data);
+    } else if (isCommandActive && millis() - lastCommandTime > COMMAND_LIFETIME) {
+        // Serial.println("Timeout");
+        isCommandActive = false;
+        execCommand("0,0,0,0");
     }
-}
-
-void waitForButton() {
-    Serial.println("waitForButton");
-    while (digitalRead(PIN_BUTTON_X) != LOW && digitalRead(PIN_BUTTON_Y) != LOW) {
-    }
-}
-
-void controlXY() {
-    Serial.println("controlXY");
-    digitalWrite(PIN_CONTROL_ENABLED, HIGH);
-    const unsigned long startMillis = millis();
-    while (millis() - startMillis < MILLIS_TIMEOUT) {
-        if (digitalRead(PIN_BUTTON_X) == LOW && digitalRead(PIN_LIMIT_SWITCH_X_END) != LOW) {
-            servoX.writeMicroseconds(MICROS_SERVO_X_FORWARD);
-        } else {
-            servoX.writeMicroseconds(MICROS_SERVO_STOP);
-        }
-
-        if (digitalRead(PIN_BUTTON_Y) == LOW && digitalRead(PIN_LIMIT_SWITCH_Y_END) != LOW) {
-            servoY.writeMicroseconds(MICROS_SERVO_Y_FORWARD);
-        } else {
-            servoY.writeMicroseconds(MICROS_SERVO_STOP);
-        }
-    }
-    servoX.writeMicroseconds(MICROS_SERVO_STOP);
-    servoY.writeMicroseconds(MICROS_SERVO_STOP);
-    digitalWrite(PIN_CONTROL_ENABLED, LOW);
-}
-
-void catchObject() {
-    Serial.println("catchObject");
-    servoZ.writeMicroseconds(MICROS_SERVO_Z_DOWN);
-    delay(MILLIS_Z_DOWN);
-    servoZ.writeMicroseconds(MICROS_SERVO_STOP);
-
-    uint8_t DEGREE_SERVO_ARM_CLOSE = random(DEGREE_SERVO_ARM_CLOSE_MIN, DEGREE_SERVO_ARM_CLOSE_MAX);
-    delay(MILLIS_ARM_MOVE_INTERVAL);
-    servoArm.write(DEGREE_SERVO_ARM_OPEN / 2);
-    delay(MILLIS_ARM_MOVE_INTERVAL);
-    servoArm.write(DEGREE_SERVO_ARM_CLOSE);
-    delay(MILLIS_ARM_MOVE_INTERVAL);
-
-    upArm();
-}
-
-void upArm() {
-    Serial.println("upArm");
-    servoZ.writeMicroseconds(MICROS_SERVO_Z_UP);
-
-    unsigned long startMillis = millis();
-    while (digitalRead(PIN_LIMIT_SWITCH_Z_TOP) != LOW && millis() - startMillis < MILLIS_Z_UP) {
-    }
-    servoZ.writeMicroseconds(MICROS_SERVO_STOP);
-}
-
-void goHome() {
-    Serial.println("goHome");
-    servoX.writeMicroseconds(MICROS_SERVO_X_BACKWARD);
-    servoY.writeMicroseconds(MICROS_SERVO_Y_BACKWARD);
-    bool isXHome = false;
-    bool isYHome = false;
-    while (!(isXHome && isYHome)) {
-        if (!isXHome && digitalRead(PIN_LIMIT_SWITCH_X_START) == LOW) {
-            servoX.writeMicroseconds(MICROS_SERVO_STOP);
-            isXHome = true;
-        }
-        if (!isYHome && digitalRead(PIN_LIMIT_SWITCH_Y_START) == LOW) {
-            servoY.writeMicroseconds(MICROS_SERVO_STOP);
-            isYHome = true;
-        }
-    }
-}
-
-void releaseObject() {
-    Serial.println("releaseObject");
-    servoArm.write(DEGREE_SERVO_ARM_OPEN);
 }
