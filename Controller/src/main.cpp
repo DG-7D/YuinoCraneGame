@@ -38,7 +38,7 @@ uint16_t servoYMicroseconds = MICROS_SERVO_STOP;
 Servo servoZ;
 uint16_t servoZMicroseconds = MICROS_SERVO_STOP;
 Servo servoArm;
-uint8_t servoArmDegree = DEGREE_SERVO_ARM_OPEN;
+uint8_t servoArmDegree = DEGREE_SERVO_ARM_CLOSE;
 
 void setup() {
     Serial.begin(9600);
@@ -150,6 +150,8 @@ void updateServo() {
     } else if (digitalRead(PIN_LIMIT_SWITCH_X_END) == LOW) {
         servoX.writeMicroseconds(MICROS_SERVO_X_BACKWARD);
         servoXMicroseconds = MICROS_SERVO_STOP;
+    } else if (servoXMicroseconds == MICROS_SERVO_STOP) {
+        servoX.release();
     } else {
         servoX.writeMicroseconds(servoXMicroseconds);
     }
@@ -160,6 +162,8 @@ void updateServo() {
     } else if (digitalRead(PIN_LIMIT_SWITCH_Y_END) == LOW) {
         servoY.writeMicroseconds(MICROS_SERVO_Y_BACKWARD);
         servoYMicroseconds = MICROS_SERVO_STOP;
+    } else if (servoYMicroseconds == MICROS_SERVO_STOP) {
+        servoY.release();
     } else {
         servoY.writeMicroseconds(servoYMicroseconds);
     }
@@ -167,6 +171,8 @@ void updateServo() {
     if (digitalRead(PIN_LIMIT_SWITCH_Z_TOP) == LOW) {
         servoZ.writeMicroseconds(MICROS_SERVO_Z_DOWN);
         servoZMicroseconds = MICROS_SERVO_STOP;
+    } else if (servoZMicroseconds == MICROS_SERVO_STOP) {
+        servoZ.release();
     } else {
         servoZ.writeMicroseconds(servoZMicroseconds);
     }
