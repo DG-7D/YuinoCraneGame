@@ -23,9 +23,6 @@ const uint16_t MICROS_SERVO_Z_MOVE = 100;
 const uint8_t DEGREE_SERVO_ARM_CLOSE = 0;
 const uint8_t DEGREE_SERVO_ARM_OPEN = 45;
 
-// 時間設定
-const unsigned long COMMAND_LIFETIME = 500;
-
 // 定数計算
 const uint16_t MICROS_SERVO_X_FORWARD = MICROS_SERVO_STOP + MICROS_SERVO_X_MOVE;
 const uint16_t MICROS_SERVO_X_BACKWARD = MICROS_SERVO_STOP - MICROS_SERVO_X_MOVE;
@@ -35,12 +32,13 @@ const uint16_t MICROS_SERVO_Z_UP = MICROS_SERVO_STOP - MICROS_SERVO_Z_MOVE;
 const uint16_t MICROS_SERVO_Z_DOWN = MICROS_SERVO_STOP + MICROS_SERVO_Z_MOVE;
 
 Servo servoX;
+uint16_t servoXMicroseconds = MICROS_SERVO_STOP;
 Servo servoY;
+uint16_t servoYMicroseconds = MICROS_SERVO_STOP;
 Servo servoZ;
+uint16_t servoZMicroseconds = MICROS_SERVO_STOP;
 Servo servoArm;
-
-unsigned long lastCommandTime = 0;
-bool isCommandActive = false;
+uint8_t servoArmDegree = DEGREE_SERVO_ARM_OPEN;
 
 void setup() {
     Serial.begin(9600);
@@ -56,8 +54,6 @@ void setup() {
     servoY.attach(PIN_SERVO_Y);
     servoZ.attach(PIN_SERVO_Z);
     servoArm.attach(PIN_SERVO_ARM);
-
-    execCommand("0,0,0,0");
 
     Serial.print("> ");
 }
@@ -85,6 +81,8 @@ void loop() {
         Serial.print("> ");
         Serial.print(command);
     }
+
+    updateServo();
 }
 
 void execCommand(String command) {
@@ -101,46 +99,77 @@ void execCommand(String command) {
     }
     values[index] = command.substring(startPos).toInt();
 
-    if (values[0] == -1 && digitalRead(PIN_LIMIT_SWITCH_X_START) != LOW) {
-        servoX.writeMicroseconds(MICROS_SERVO_X_BACKWARD);
+    if (values[0] == -1) {
+        servoXMicroseconds = MICROS_SERVO_X_BACKWARD;
         Serial.print("X-, ");
-    } else if (values[0] == 1 && digitalRead(PIN_LIMIT_SWITCH_X_END) != LOW) {
-        servoX.writeMicroseconds(MICROS_SERVO_X_FORWARD);
+    } else if (values[0] == 1) {
+        servoXMicroseconds = MICROS_SERVO_X_FORWARD;
         Serial.print("X+, ");
     } else {
-        servoX.writeMicroseconds(MICROS_SERVO_STOP);
+        servoXMicroseconds = MICROS_SERVO_STOP;
         Serial.print("X0, ");
     }
 
-    if (values[1] == -1 && digitalRead(PIN_LIMIT_SWITCH_Y_START) != LOW) {
-        servoY.writeMicroseconds(MICROS_SERVO_Y_BACKWARD);
+    if (values[1] == -1) {
+        servoYMicroseconds = MICROS_SERVO_Y_BACKWARD;
         Serial.print("Y-, ");
-    } else if (values[1] == 1 && digitalRead(PIN_LIMIT_SWITCH_Y_END) != LOW) {
-        servoY.writeMicroseconds(MICROS_SERVO_Y_FORWARD);
+    } else if (values[1] == 1) {
+        servoYMicroseconds = MICROS_SERVO_Y_FORWARD;
         Serial.print("Y+, ");
     } else {
-        servoY.writeMicroseconds(MICROS_SERVO_STOP);
+        servoYMicroseconds = MICROS_SERVO_STOP;
         Serial.print("Y0, ");
     }
 
     if (values[2] == -1) {
-        servoZ.writeMicroseconds(MICROS_SERVO_Z_DOWN);
+        servoZMicroseconds = MICROS_SERVO_Z_DOWN;
         Serial.print("Z-, ");
-    } else if (values[2] == 1 && digitalRead(PIN_LIMIT_SWITCH_Z_TOP) != LOW) {
-        servoZ.writeMicroseconds(MICROS_SERVO_Z_UP);
+    } else if (values[2] == 1) {
+        servoZMicroseconds = MICROS_SERVO_Z_UP;
         Serial.print("Z+, ");
     } else {
-        servoZ.writeMicroseconds(MICROS_SERVO_STOP);
+        servoZMicroseconds = MICROS_SERVO_STOP;
         Serial.print("Z0, ");
     }
 
     if (values[3] == 1) {
-        servoArm.write(DEGREE_SERVO_ARM_CLOSE);
+        servoArmDegree = DEGREE_SERVO_ARM_OPEN;
         Serial.print("AO, ");
     } else {
-        servoArm.write(DEGREE_SERVO_ARM_OPEN);
+        servoArmDegree = DEGREE_SERVO_ARM_CLOSE;
         Serial.print("AC, ");
     }
 
     Serial.println();
+}
+
+void updateServo() {
+    if (digitalRead(PIN_LIMIT_SWITCH_X_START) == LOW) {
+        servoX.writeMicroseconds(MICROS_SERVO_X_FORWARD);
+        servoXMicroseconds = MICROS_SERVO_STOP;
+    } else if (digitalRead(PIN_LIMIT_SWITCH_X_END) == LOW) {
+        servoX.writeMicroseconds(MICROS_SERVO_X_BACKWARD);
+        servoXMicroseconds = MICROS_SERVO_STOP;
+    } else {
+        servoX.writeMicroseconds(servoXMicroseconds);
+    }
+
+    if (digitalRead(PIN_LIMIT_SWITCH_Y_START) == LOW) {
+        servoY.writeMicroseconds(MICROS_SERVO_Y_FORWARD);
+        servoYMicroseconds = MICROS_SERVO_STOP;
+    } else if (digitalRead(PIN_LIMIT_SWITCH_Y_END) == LOW) {
+        servoY.writeMicroseconds(MICROS_SERVO_Y_BACKWARD);
+        servoYMicroseconds = MICROS_SERVO_STOP;
+    } else {
+        servoY.writeMicroseconds(servoYMicroseconds);
+    }
+
+    if (digitalRead(PIN_LIMIT_SWITCH_Z_TOP) == LOW) {
+        servoZ.writeMicroseconds(MICROS_SERVO_Z_DOWN);
+        servoZMicroseconds = MICROS_SERVO_STOP;
+    } else {
+        servoZ.writeMicroseconds(servoZMicroseconds);
+    }
+
+    servoArm.write(servoArmDegree);
 }

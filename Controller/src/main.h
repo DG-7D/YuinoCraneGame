@@ -4,5 +4,6 @@
 void setup();
 void loop();
 void execCommand(String command);
+void updateServo();
 
 #endif
