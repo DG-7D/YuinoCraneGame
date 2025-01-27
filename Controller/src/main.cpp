@@ -17,11 +17,10 @@ const uint8_t PIN_SERVO_ARM = 17;
 
 // サーボ設定
 const uint16_t MICROS_SERVO_STOP = 1500;
-const int16_t MICROS_SERVO_X_MOVE = 500;
-const int16_t MICROS_SERVO_Y_MOVE = -500;
-const uint16_t MICROS_SERVO_Z_MOVE = 500;
-const uint8_t DEGREE_SERVO_ARM_CLOSE_MIN = 0;
-const uint8_t DEGREE_SERVO_ARM_CLOSE_MAX = 5;
+const int16_t MICROS_SERVO_X_MOVE = 100;
+const int16_t MICROS_SERVO_Y_MOVE = -100;
+const uint16_t MICROS_SERVO_Z_MOVE = 100;
+const uint8_t DEGREE_SERVO_ARM_CLOSE = 0;
 const uint8_t DEGREE_SERVO_ARM_OPEN = 45;
 
 // 時間設定
@@ -61,6 +60,31 @@ void setup() {
     execCommand("0,0,0,0");
 
     Serial.print("> ");
+}
+
+String command = "";
+
+void loop() {
+    if (Serial.available()) {
+        char input = Serial.read();
+        if (input == '\r') {
+            return;
+        }
+
+        Serial.println();
+
+        if (input == '\n') {
+            execCommand(command);
+            command = "";
+        } else if (input == '\b') {
+            command = command.substring(0, command.length() - 1);
+        } else {
+            command += input;
+        }
+
+        Serial.print("> ");
+        Serial.print(command);
+    }
 }
 
 void execCommand(String command) {
@@ -111,7 +135,7 @@ void execCommand(String command) {
     }
 
     if (values[3] == 1) {
-        servoArm.write(DEGREE_SERVO_ARM_CLOSE_MIN);
+        servoArm.write(DEGREE_SERVO_ARM_CLOSE);
         Serial.print("AO, ");
     } else {
         servoArm.write(DEGREE_SERVO_ARM_OPEN);
@@ -119,29 +143,4 @@ void execCommand(String command) {
     }
 
     Serial.println();
-}
-
-String command = "";
-
-void loop() {
-    if (Serial.available()) {
-        char input = Serial.read();
-        if (input == '\r') {
-            return;
-        }
-
-        Serial.println();
-
-        if (input == '\n') {
-            execCommand(command);
-            command = "";
-        } else if (input == '\b') {
-            command = command.substring(0, command.length() - 1);
-        } else {
-            command += input;
-        }
-
-        Serial.print("> ");
-        Serial.print(command);
-    }
 }
