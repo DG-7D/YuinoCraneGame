@@ -17,7 +17,10 @@ const uint8_t pinArray[outputCount] = {2, 3,
 #endif
 
 const uint16_t pwmWidthMicros = 2048;
-const uint16_t pulseWidthMicros = 1024;
+const uint16_t pulseWidthMicrosArray[outputCount] = {512, 512,
+                                                     1024, 1024,
+                                                     1536, 1536,
+                                                     2048, 2048};
 
 byte motorStateFlag = 0b00000000;
 
@@ -34,10 +37,10 @@ void loop() {
     while (Serial.available() > 0) {
         motorStateFlag = Serial.read();
     }
-    long currentTime = micros();
+    uint16_t time = micros() % pwmWidthMicros;
     for (uint8_t i = 0; i < outputCount; i++) {
         digitalWrite(
             pinArray[i],
-            bitRead(motorStateFlag, i) && (currentTime % pwmWidthMicros < pulseWidthMicros) ? HIGH : LOW);
+            bitRead(motorStateFlag, i) && (time < pulseWidthMicrosArray[i]) ? HIGH : LOW);
     }
 }
