@@ -36,6 +36,7 @@ void setup() {
 void loop() {
     while (Serial.available() > 0) {
         motorStateFlag = Serial.read();
+        Serial.write(motorStateFlag);
     }
     uint16_t time = micros() % pwmWidthMicros;
     for (uint8_t i = 0; i < outputCount; i++) {
