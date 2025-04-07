@@ -3,34 +3,53 @@
 constexpr uint8_t motorCount = 4;
 constexpr uint8_t outputCount = 2 * motorCount;
 
-constexpr uint8_t pinArray[outputCount] = {PIN_PB2, PIN_PA4,
-                                           PIN_PA7, PIN_PA5,
-                                           PIN_PB0, PIN_PA0,
-                                           PIN_PB1, PIN_PA3};
+constexpr uint8_t portAvailable[2] = {0b11111001, 0b00000111}; // PA2(RXD), PA1(TXD), PB3(RESET)には触れない
+constexpr byte portMappingArray[outputCount][2] = {
+    {0, 1 << 2}, // PB2
+    {1 << 4, 0}, // PA4
+    {0, 1 << 7}, // PA7
+    {1 << 5, 0}, // PA5
+    {0, 1 << 0}, // PB0
+    {1 << 0, 0}, // PA0
+    {0, 1 << 1}, // PB1
+    {1 << 3, 0}  // PA3
+};
 
 constexpr uint8_t pulseWidthArray[outputCount] = {31, 31,
                                                   63, 63,
                                                   127, 127,
                                                   255, 255}; // TCNT0(0-255)と比較 2^n - 1のほうが速い
 
-byte motorStateFlag = 0b00000000;
+uint8_t portEnabled[2] = {0, 0};
 
 void setup() {
     Serial.begin(9600);
-    for (uint8_t i = 0; i < outputCount; i++) {
-        pinMode(pinArray[i], OUTPUT);
-    }
+    DDRA |= portAvailable[0];
+    DDRB |= portAvailable[1];
 }
 
 void loop() {
     while (Serial.available() > 0) {
-        motorStateFlag = Serial.read();
+        uint8_t motorStateFlag = Serial.read();
+        portEnabled[0] = 0;
+        portEnabled[1] = 0;
+        for (uint8_t i = 0; i < outputCount; i++) {
+            if (bitRead(motorStateFlag, i)) {
+                portEnabled[0] |= portMappingArray[i][0];
+                portEnabled[1] |= portMappingArray[i][1];
+            }
+        }
         Serial.write(motorStateFlag);
     }
 
+    uint8_t portPWM[2] = {0, 0};
     for (uint8_t i = 0; i < outputCount; i++) {
-        digitalWrite(
-            pinArray[i],
-            bitRead(motorStateFlag, i) && (TCNT0 <= pulseWidthArray[i]) ? HIGH : LOW);
+        if (TCNT0 <= pulseWidthArray[i]) {
+            portPWM[0] |= portMappingArray[i][0];
+            portPWM[1] |= portMappingArray[i][1];
+        }
     }
+
+    PORTA = (PORTA & ~portAvailable[0]) | (portEnabled[0] & portPWM[0]);
+    PORTB = (PORTB & ~portAvailable[1]) | (portEnabled[1] & portPWM[1]);
 }
