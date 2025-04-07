@@ -7,7 +7,7 @@ constexpr uint8_t portAvailable[2] = {0b11111001, 0b00000111}; // PA2(RXD), PA1(
 constexpr byte portMappingArray[outputCount][2] = {
     {0, 1 << 2}, // PB2
     {1 << 4, 0}, // PA4
-    {0, 1 << 7}, // PA7
+    {1 << 7, 0}, // PA7
     {1 << 5, 0}, // PA5
     {0, 1 << 0}, // PB0
     {1 << 0, 0}, // PA0
