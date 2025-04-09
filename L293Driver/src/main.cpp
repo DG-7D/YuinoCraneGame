@@ -1,47 +1,55 @@
 #include <Arduino.h>
 
-const uint8_t motorCount = 4;
-const uint8_t outputCount = 2 * motorCount;
+constexpr uint8_t motorCount = 4;
+constexpr uint8_t outputCount = 2 * motorCount;
 
-#ifdef __AVR_ATtinyX4__
-const uint8_t pinArray[outputCount] = {PIN_PB2, PIN_PA4,
-                                       PIN_PA7, PIN_PA5,
-                                       PIN_PB0, PIN_PA0,
-                                       PIN_PB1, PIN_PA3};
+constexpr uint8_t portAvailable[2] = {0b11111001, 0b00000111}; // PA2(RXD), PA1(TXD), PB3(RESET)には触れない
+constexpr byte portMappingArray[outputCount][2] = {
+    {0, 1 << 2}, // PB2
+    {1 << 4, 0}, // PA4
+    {1 << 7, 0}, // PA7
+    {1 << 5, 0}, // PA5
+    {0, 1 << 0}, // PB0
+    {1 << 0, 0}, // PA0
+    {0, 1 << 1}, // PB1
+    {1 << 3, 0}  // PA3
+};
 
-#elif __AVR_ATmega328P__
-const uint8_t pinArray[outputCount] = {2, 3,
-                                       4, 5,
-                                       6, 7,
-                                       8, 9};
-#endif
+constexpr uint8_t pulseWidthArray[outputCount] = {31, 31,
+                                                  63, 63,
+                                                  127, 127,
+                                                  255, 255}; // TCNT0(0-255)と比較 2^n - 1のほうが速い
 
-const uint16_t pwmWidthMicros = 2048;
-const uint16_t pulseWidthMicrosArray[outputCount] = {512, 512,
-                                                     1024, 1024,
-                                                     1536, 1536,
-                                                     2048, 2048};
-
-byte motorStateFlag = 0b00000000;
+uint8_t portEnabled[2] = {0, 0};
 
 void setup() {
     Serial.begin(9600);
-    for (uint8_t i = 0; i < outputCount; i++) {
-        pinMode(pinArray[i], OUTPUT);
-    }
-    while (!Serial)
-        ;
+    DDRA |= portAvailable[0];
+    DDRB |= portAvailable[1];
 }
 
 void loop() {
     while (Serial.available() > 0) {
-        motorStateFlag = Serial.read();
+        uint8_t motorStateFlag = Serial.read();
+        portEnabled[0] = 0;
+        portEnabled[1] = 0;
+        for (uint8_t i = 0; i < outputCount; i++) {
+            if (bitRead(motorStateFlag, i)) {
+                portEnabled[0] |= portMappingArray[i][0];
+                portEnabled[1] |= portMappingArray[i][1];
+            }
+        }
         Serial.write(motorStateFlag);
     }
-    uint16_t time = micros() % pwmWidthMicros;
+
+    uint8_t portPWM[2] = {0, 0};
     for (uint8_t i = 0; i < outputCount; i++) {
-        digitalWrite(
-            pinArray[i],
-            bitRead(motorStateFlag, i) && (time < pulseWidthMicrosArray[i]) ? HIGH : LOW);
+        if (TCNT0 <= pulseWidthArray[i]) {
+            portPWM[0] |= portMappingArray[i][0];
+            portPWM[1] |= portMappingArray[i][1];
+        }
     }
+
+    PORTA = (PORTA & ~portAvailable[0]) | (portEnabled[0] & portPWM[0]);
+    PORTB = (PORTB & ~portAvailable[1]) | (portEnabled[1] & portPWM[1]);
 }
