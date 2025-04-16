@@ -1,3 +1,5 @@
 *.gbr
 *.gbrjob
 *.drl
+.vscode
+.pio
