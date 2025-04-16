@@ -1621,6 +1621,26 @@
 		)
 		(uuid "b5b0fceb-65db-4885-8c2c-18a973257f1d")
 	)
+	(wire
+		(pts
+			(xy 69.85 82.55) (xy 69.85 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bded6ccc-b772-468e-85eb-904288f2ce6f")
+	)
+	(wire
+		(pts
+			(xy 68.58 82.55) (xy 69.85 82.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fa379ba6-e567-4f04-a29a-d4b2a4c6b370")
+	)
 	(label "VR2"
 		(at 69.85 58.42 0)
 		(effects
@@ -1720,73 +1740,6 @@
 			(justify left bottom)
 		)
 		(uuid "f0eb4a75-6823-4dff-8209-3967f12e1391")
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 68.58 82.55 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "0de26b3d-8ec5-41c0-ac2c-3401897955e2")
-		(property "Reference" "#PWR07"
-			(at 74.93 82.55 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 72.39 82.5499 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" ""
-			(at 68.58 82.55 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 68.58 82.55 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 68.58 82.55 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "b6181c80-ed7e-4b2e-8a82-772eb14dd261")
-		)
-		(instances
-			(project "ジョイスティック"
-				(path "/2795e024-f1e0-4103-aa3b-1bc48db122be"
-					(reference "#PWR07")
-					(unit 1)
-				)
-			)
-		)
 	)
 	(symbol
 		(lib_id "Device:R")
