@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "LV8548MC")(type "KiCad")(uri "${KIPRJMOD}/LV8548MC.kicad_sym")(options "")(descr ""))
+)
