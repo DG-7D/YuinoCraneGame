@@ -1,22 +1,22 @@
 #include <Arduino.h>
-
+#include <ESP32Servo.h>
 // HardwareSerial Serial1(2);
 
 // ピン設定
 //     スティック入力
 const uint8_t PIN_STICK_X = 26;
-const uint8_t PIN_STICK_Y = 25;    
+const uint8_t PIN_STICK_Y = 27;    
 //     ボタン入力
-const uint8_t PIN_STICK_BUTTON = 27;
+const uint8_t PIN_STICK_BUTTON = 25;
 
-const uint8_t PIN_BUTTON = 34;
-const uint8_t PIN_BUTTON_LED = 35;
+const uint8_t PIN_BUTTON = 14;
+const uint8_t PIN_BUTTON_LED = 12;
 //     リミットスイッチ入力
 // const uint8_t PIN_LIMIT_SWITCH_X_START = 32;
 // const uint8_t PIN_LIMIT_SWITCH_Y_START = 25;
 // const uint8_t PIN_LIMIT_SWITCH_Z_TOP = 13;
 //     サーボ出力
-const uint8_t PIN_SERVO_ARM = 17;
+// const uint8_t PIN_SERVO_ARM = 17;
 //     信号出力
 const uint8_t PIN_CONTROL_ENABLED = 4;
 // サーボ設定
@@ -61,7 +61,7 @@ void setup() {
 void loop() {
     // Serial.println("loop");
     int8_t xValue = -1 * (analogRead(PIN_STICK_X)/16 - INT8_MAX);
-    int8_t yValue = (analogRead(PIN_STICK_Y)/16 - INT8_MAX);
+    int8_t yValue = -1 * (analogRead(PIN_STICK_Y)/16 - INT8_MAX);
     bool buttonValue = digitalRead(PIN_STICK_BUTTON);
     // Serial.print("X: ");Serial.print(xValue);
     // Serial.print(" Y: ");Serial.print(yValue);  
@@ -126,21 +126,21 @@ void sendSignal(int8_t x_input, int8_t y_input, bool button) {
     
 }
 
-void catchObject() {
-    Serial.println("catchObject");
-    servoZ.writeMicroseconds(MICROS_SERVO_Z_DOWN);
-    delay(MILLIS_Z_DOWN);
-    servoZ.writeMicroseconds(MICROS_SERVO_STOP);
+// void catchObject() {
+//     Serial.println("catchObject");
+//     servoZ.writeMicroseconds(MICROS_SERVO_Z_DOWN);
+//     delay(MILLIS_Z_DOWN);
+//     servoZ.writeMicroseconds(MICROS_SERVO_STOP);
 
-    uint8_t DEGREE_SERVO_ARM_CLOSE = random(DEGREE_SERVO_ARM_CLOSE_MIN, DEGREE_SERVO_ARM_CLOSE_MAX);
-    delay(MILLIS_ARM_MOVE_INTERVAL);
-    servoArm.write(DEGREE_SERVO_ARM_OPEN / 2);
-    delay(MILLIS_ARM_MOVE_INTERVAL);
-    servoArm.write(DEGREE_SERVO_ARM_CLOSE);
-    delay(MILLIS_ARM_MOVE_INTERVAL);
+//     uint8_t DEGREE_SERVO_ARM_CLOSE = random(DEGREE_SERVO_ARM_CLOSE_MIN, DEGREE_SERVO_ARM_CLOSE_MAX);
+//     delay(MILLIS_ARM_MOVE_INTERVAL);
+//     servoArm.write(DEGREE_SERVO_ARM_OPEN / 2);
+//     delay(MILLIS_ARM_MOVE_INTERVAL);
+//     servoArm.write(DEGREE_SERVO_ARM_CLOSE);
+//     delay(MILLIS_ARM_MOVE_INTERVAL);
 
-    upArm();
-}
+//     upArm();
+// }
 
 // void upArm() {
 //     Serial.println("upArm");
