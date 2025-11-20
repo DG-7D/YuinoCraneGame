@@ -8,18 +8,24 @@ const uint8_t PIN_STICK_X = 26;
 const uint8_t PIN_STICK_Y = 25;    
 //     ボタン入力
 const uint8_t PIN_STICK_BUTTON = 27;
+
+const uint8_t PIN_BUTTON = 34;
+const uint8_t PIN_BUTTON_LED = 35;
 //     リミットスイッチ入力
 // const uint8_t PIN_LIMIT_SWITCH_X_START = 32;
 // const uint8_t PIN_LIMIT_SWITCH_Y_START = 25;
 // const uint8_t PIN_LIMIT_SWITCH_Z_TOP = 13;
 //     サーボ出力
-// const uint8_t PIN_SERVO_ARM = 17;
-// //     信号出力
-// const uint8_t PIN_CONTROL_ENABLED = 4;
-// // サーボ設定
-// const uint8_t DEGREE_SERVO_ARM_CLOSE_MIN = 0;
-// const uint8_t DEGREE_SERVO_ARM_CLOSE_MAX = 5;
-// const uint8_t DEGREE_SERVO_ARM_OPEN = 45;
+const uint8_t PIN_SERVO_ARM = 17;
+//     信号出力
+const uint8_t PIN_CONTROL_ENABLED = 4;
+// サーボ設定
+const uint8_t DEGREE_SERVO_ARM_CLOSE_MIN = 0;
+const uint8_t DEGREE_SERVO_ARM_CLOSE_MAX = 5;
+const uint8_t DEGREE_SERVO_ARM_OPEN = 45;
+
+Servo servoZ;
+Servo servoArm;
 
 // 閾値設定 スティックの中心位置128
 const uint8_t STICK_X_THRESHOLD = 20;
@@ -39,7 +45,9 @@ void setup() {
 
     pinMode(PIN_STICK_X, INPUT);
     pinMode(PIN_STICK_Y, INPUT);
-    pinMode(PIN_STICK_BUTTON, INPUT_PULLUP);
+    pinMode(PIN_STICK_BUTTON, INPUT_PULLDOWN);
+    pinMode(PIN_BUTTON, INPUT_PULLDOWN);
+    pinMode(PIN_BUTTON_LED, OUTPUT);
     analogSetAttenuation(ADC_11db);  // 約3.3Vまでの入力に対応
     // pinMode(PIN_LIMIT_SWITCH_X_START, INPUT_PULLUP);
     // pinMode(PIN_LIMIT_SWITCH_Y_START, INPUT_PULLUP);
@@ -118,21 +126,21 @@ void sendSignal(int8_t x_input, int8_t y_input, bool button) {
     
 }
 
-// void catchObject() {
-//     Serial.println("catchObject");
-//     servoZ.writeMicroseconds(MICROS_SERVO_Z_DOWN);
-//     delay(MILLIS_Z_DOWN);
-//     servoZ.writeMicroseconds(MICROS_SERVO_STOP);
+void catchObject() {
+    Serial.println("catchObject");
+    servoZ.writeMicroseconds(MICROS_SERVO_Z_DOWN);
+    delay(MILLIS_Z_DOWN);
+    servoZ.writeMicroseconds(MICROS_SERVO_STOP);
 
-//     uint8_t DEGREE_SERVO_ARM_CLOSE = random(DEGREE_SERVO_ARM_CLOSE_MIN, DEGREE_SERVO_ARM_CLOSE_MAX);
-//     delay(MILLIS_ARM_MOVE_INTERVAL);
-//     servoArm.write(DEGREE_SERVO_ARM_OPEN / 2);
-//     delay(MILLIS_ARM_MOVE_INTERVAL);
-//     servoArm.write(DEGREE_SERVO_ARM_CLOSE);
-//     delay(MILLIS_ARM_MOVE_INTERVAL);
+    uint8_t DEGREE_SERVO_ARM_CLOSE = random(DEGREE_SERVO_ARM_CLOSE_MIN, DEGREE_SERVO_ARM_CLOSE_MAX);
+    delay(MILLIS_ARM_MOVE_INTERVAL);
+    servoArm.write(DEGREE_SERVO_ARM_OPEN / 2);
+    delay(MILLIS_ARM_MOVE_INTERVAL);
+    servoArm.write(DEGREE_SERVO_ARM_CLOSE);
+    delay(MILLIS_ARM_MOVE_INTERVAL);
 
-//     upArm();
-// }
+    upArm();
+}
 
 // void upArm() {
 //     Serial.println("upArm");
