@@ -15,10 +15,10 @@ constexpr byte portMappingArray[outputCount][2] = {
     {0, 1 << 0}, // PB0
 };
 
-constexpr uint8_t pulseWidthArray[outputCount] = {31, 31,
-                                                  63, 63,
+constexpr uint8_t pulseWidthArray[outputCount] = {127, 127,
                                                   127, 127,
-                                                  255, 255}; // TCNT0(0-255)と比較 2^n - 1のほうが速い
+                                                  127, 127,
+                                                  127, 127}; // TCNT0(0-255)と比較 2^n - 1のほうが速い
 
 uint8_t portEnabled[2] = {0, 0};
 
