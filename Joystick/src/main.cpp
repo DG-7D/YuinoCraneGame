@@ -171,6 +171,7 @@ void enableControl() {
 }
 
 void disableControl() {
+    sendSignal(0, 0);
     digitalWrite(PIN_BUTTON_LED, LOW);
     is_control_enabled = false;
 }
@@ -205,7 +206,7 @@ void control() {
 void downArm() {
     Serial.println("downArm");
     // UPからDOWNへ5段階で移動し、各段階で遅延を入れる
-    const uint8_t STEPS = 6;
+    const uint8_t STEPS = 100;
     for (uint8_t i = 1; i <= STEPS; ++i) {
         int angle = DEGREE_SERVO_Z_UP + ((int)DEGREE_SERVO_Z_DOWN - (int)DEGREE_SERVO_Z_UP) * i / STEPS;
         servoZ.write(angle);
