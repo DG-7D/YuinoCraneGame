@@ -25,17 +25,17 @@ const uint8_t DEGREE_SERVO_ARM_CLOSE_MAX = 5;
 const uint8_t DEGREE_SERVO_ARM_OPEN = 45;
 
 const uint8_t DEGREE_SERVO_Z_UP = 180;
-const uint8_t DEGREE_SERVO_Z_DOWN = 20;
+const uint8_t DEGREE_SERVO_Z_DOWN = 30;
 
 Servo servoZ;
 Servo servoArm;
 
 // 時間設定
 const uint16_t MILLIS_TIMEOUT = 30 * 1000;
-const uint16_t MILLIS_Z_DOWN_TIME = 2000;
+const uint16_t MILLIS_Z_DOWN_TIME = 1000;
 const uint16_t MILLIS_Z_UP_INTERVAL = 1000;
 const uint16_t MILLIS_ARM_MOVE_INTERVAL = 500;
-const uint16_t MILLIS_HOMING_INTERVAL = 3000;
+const uint16_t MILLIS_HOMING_INTERVAL = 2000;
 
 // 閾値設定 スティックの中心位置128
 const uint8_t STICK_X_THRESHOLD = 20;
