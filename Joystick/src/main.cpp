@@ -71,14 +71,21 @@ void setup() {
     attachInterrupt(digitalPinToInterrupt(PIN_BUTTON), buttonPressed, RISING);
 
     upArm();
+    delay(500);
     goHome();
+    delay(1000);
     releaseObject();
+    delay(1000);
+    servoZ.detach();
+    Serial.println("setup done");
 }
 
 void loop() {
     Serial.println("loop");
 
     waitForControl();
+    servoZ.attach(PIN_SERVO_Z);
+    Serial.println("servoZ attached");
     control();
     delay(500);
     downArm();
@@ -90,6 +97,8 @@ void loop() {
     delay(1000);
     releaseObject();
     delay(1000);
+    servoZ.detach();
+    Serial.println("servoZ detached");
 
     Serial.println("loop done");
 }
@@ -223,7 +232,7 @@ void upArm() {
 
 void goHome() {
     Serial.println("goHome");
-    sendSignal(-1, -1);
+    sendSignal(1, 1);
     delay(MILLIS_HOMING_INTERVAL);
     sendSignal(0, 0);
 }
