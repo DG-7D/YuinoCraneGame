@@ -63,8 +63,8 @@ void setup() {
 
     pinMode(PIN_STICK_X, INPUT);
     pinMode(PIN_STICK_Y, INPUT);
-    pinMode(PIN_STICK_BUTTON, INPUT_PULLDOWN);
-    pinMode(PIN_BUTTON, INPUT_PULLDOWN);
+    pinMode(PIN_STICK_BUTTON, INPUT_PULLUP);
+    pinMode(PIN_BUTTON, INPUT_PULLUP);
     pinMode(PIN_BUTTON_LED, OUTPUT);
     analogSetAttenuation(ADC_11db);  // 約3.3Vまでの入力に対応
 
