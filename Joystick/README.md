@@ -1,0 +1,12 @@
+# Joystick 
+- ESP32
+  - 5V: 5V
+  - GND: GND
+  - to Motor Driver
+    - RX(to TX): 16
+    - TX(to RX): 17
+  - to Joystick
+    - X-axis: 27
+    - Y-axis: 26
+    - Button: 25
+    - Button LED: 12
