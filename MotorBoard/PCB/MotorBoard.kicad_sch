@@ -2460,7 +2460,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Conn_01x03"
+		(property "Value" "XH3"
 			(at 142.24 83.8199 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2471,7 +2471,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_1x03_P2.54mm_Vertical"
+		(property "Footprint" "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical"
 			(at 139.7 82.55 0)
 			(hide yes)
 			(show_name no)
@@ -2702,7 +2702,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Conn_01x03"
+		(property "Value" "XH3"
 			(at 142.24 71.1199 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2713,7 +2713,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_1x03_P2.54mm_Vertical"
+		(property "Footprint" "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical"
 			(at 139.7 69.85 0)
 			(hide yes)
 			(show_name no)
@@ -2865,7 +2865,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Conn_01x03"
+		(property "Value" "XH3"
 			(at 142.24 58.4199 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2876,7 +2876,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_1x03_P2.54mm_Vertical"
+		(property "Footprint" "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical"
 			(at 139.7 57.15 0)
 			(hide yes)
 			(show_name no)
@@ -3129,7 +3129,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 126.492 69.85 90)
 			(hide yes)
 			(show_name no)
@@ -3368,7 +3368,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 46.0248 88.9 0)
 			(hide yes)
 			(show_name no)
@@ -3753,7 +3753,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Conn_01x03"
+		(property "Value" "XH3"
 			(at 142.24 96.5199 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3764,7 +3764,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_1x03_P2.54mm_Vertical"
+		(property "Footprint" "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical"
 			(at 139.7 95.25 0)
 			(hide yes)
 			(show_name no)
@@ -4144,7 +4144,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "XH"
+		(property "Value" "XH4"
 			(at 142.24 45.7199 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4240,7 +4240,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 88.9 70.1548 0)
 			(hide yes)
 			(show_name no)
@@ -4323,7 +4323,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 31.4452 88.9 0)
 			(hide yes)
 			(show_name no)
@@ -4394,7 +4394,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "XH"
+		(property "Value" "XH4"
 			(at 142.24 33.0199 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4718,7 +4718,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "XH"
+		(property "Value" "XH3"
 			(at 40.64 39.3699 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4893,7 +4893,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 126.492 57.15 90)
 			(hide yes)
 			(show_name no)
@@ -5210,7 +5210,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 88.9 28.9052 0)
 			(hide yes)
 			(show_name no)
