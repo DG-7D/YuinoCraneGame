@@ -1914,6 +1914,12 @@
 		)
 	)
 	(junction
+		(at 116.84 86.36)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "0299c69a-db3a-4259-ac7d-c8cc060504e5")
+	)
+	(junction
 		(at 128.27 60.96)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1950,6 +1956,12 @@
 		(uuid "4dba8018-5593-41a2-aabe-c5edbbdb0598")
 	)
 	(junction
+		(at 116.84 93.98)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "52c55658-0ccf-4367-8445-97e32fe345c5")
+	)
+	(junction
 		(at 128.27 66.04)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1960,6 +1972,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "76d9d9d3-ea41-4999-b36d-d784e2199e80")
+	)
+	(junction
+		(at 116.84 91.44)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "96d49b46-40f4-461f-b088-4df104073c39")
 	)
 	(junction
 		(at 30.48 86.36)
@@ -1986,6 +2004,16 @@
 			(type default)
 		)
 		(uuid "01b1e914-acab-4099-8648-239432e536a1")
+	)
+	(wire
+		(pts
+			(xy 104.14 86.36) (xy 109.22 86.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0282554d-cfb3-4402-9879-9d9493d9389b")
 	)
 	(wire
 		(pts
@@ -2019,6 +2047,16 @@
 	)
 	(wire
 		(pts
+			(xy 116.84 91.44) (xy 116.84 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "35fcdb5b-b26d-4de2-8708-dafd9180d9d9")
+	)
+	(wire
+		(pts
 			(xy 134.62 59.69) (xy 134.62 60.96)
 		)
 		(stroke
@@ -2026,6 +2064,16 @@
 			(type default)
 		)
 		(uuid "4c65679c-58dc-4100-b922-f08125f7c7b8")
+	)
+	(wire
+		(pts
+			(xy 116.84 83.82) (xy 116.84 86.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4f2af34e-daad-4001-ba82-a81a6c8746df")
 	)
 	(wire
 		(pts
@@ -2049,6 +2097,26 @@
 	)
 	(wire
 		(pts
+			(xy 104.14 83.82) (xy 109.22 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5882f922-015f-4dfa-acf1-283d6c8d1b2a")
+	)
+	(wire
+		(pts
+			(xy 116.84 93.98) (xy 116.84 96.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5fe031f2-fa35-444a-93b0-81e53cbb4c23")
+	)
+	(wire
+		(pts
 			(xy 127 53.34) (xy 128.27 53.34)
 		)
 		(stroke
@@ -2069,6 +2137,16 @@
 	)
 	(wire
 		(pts
+			(xy 104.14 93.98) (xy 109.22 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "701d3420-e5a0-45a1-8a3f-8b201975ed4c")
+	)
+	(wire
+		(pts
 			(xy 128.27 66.04) (xy 134.62 66.04)
 		)
 		(stroke
@@ -2076,6 +2154,16 @@
 			(type default)
 		)
 		(uuid "72e21946-e5b5-469a-9c74-cd8f3f2c04a9")
+	)
+	(wire
+		(pts
+			(xy 104.14 96.52) (xy 109.22 96.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "772398e7-ec01-40b3-b4f3-459a9df5bf6d")
 	)
 	(wire
 		(pts
@@ -2106,6 +2194,16 @@
 			(type default)
 		)
 		(uuid "95f650db-21fc-413d-a04e-12ff59351f71")
+	)
+	(wire
+		(pts
+			(xy 116.84 86.36) (xy 116.84 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "aaf7d64d-cd1e-4d3c-887b-3356da327221")
 	)
 	(wire
 		(pts
@@ -2169,6 +2267,16 @@
 	)
 	(wire
 		(pts
+			(xy 104.14 91.44) (xy 116.84 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "eb89fa2f-2d88-44b0-acbf-13ae5eb20c2c")
+	)
+	(wire
+		(pts
 			(xy 134.62 73.66) (xy 134.62 72.39)
 		)
 		(stroke
@@ -2195,7 +2303,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "101f9f08-32e9-4df9-ae7f-16e5636433af")
+		(uuid "0e3f1ca0-24f1-407b-a6c5-09ce50f633a8")
 	)
 	(label "Y_out_+"
 		(at 99.06 41.91 0)
@@ -2226,6 +2334,16 @@
 			(justify right bottom)
 		)
 		(uuid "295ed687-4736-4593-a362-a44a10b4d2f7")
+	)
+	(label "X_in_+"
+		(at 104.14 83.82 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "2a9f2917-a535-4dfd-a92f-9136987d252a")
 	)
 	(label "Y_out_+"
 		(at 134.62 48.26 180)
@@ -2296,6 +2414,16 @@
 			(justify right bottom)
 		)
 		(uuid "7b628253-1b05-44b3-b3f0-b70850ee4225")
+	)
+	(label "X_in_-"
+		(at 104.14 86.36 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "7f8df006-cc9a-4883-9ec5-558901ccde12")
 	)
 	(label "UPDI"
 		(at 104.14 78.74 0)
@@ -2377,36 +2505,6 @@
 		)
 		(uuid "b13e823f-1e35-4d27-bd6b-f749499793ce")
 	)
-	(label "X_in_+"
-		(at 104.14 91.44 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "be1143e8-aee0-4ae3-bb77-855e089eaa50")
-	)
-	(label "Y_in_-"
-		(at 104.14 93.98 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "c63af740-0ce0-48c4-aa9f-f6c6d86b0b5c")
-	)
-	(label "X_in_-"
-		(at 104.14 88.9 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "c78db0c9-6104-4859-95f1-0ec6b120e67a")
-	)
 	(label "UART_ESP→AVR"
 		(at 73.66 86.36 180)
 		(effects
@@ -2436,6 +2534,26 @@
 			(justify right bottom)
 		)
 		(uuid "f7ef611f-ff4a-4894-a761-91d96f57abdd")
+	)
+	(label "Y_in_-"
+		(at 104.14 93.98 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "fa373015-466d-4555-9dac-30140dc5dfdb")
+	)
+	(label "XY_PWM"
+		(at 104.14 91.44 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "fd5567a1-703c-4c68-bbe1-e3552c413c41")
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x03")
@@ -2674,6 +2792,165 @@
 			(project "MotorBoard"
 				(path "/ede9d1bf-2106-4e33-ad7f-7bde62847eae"
 					(reference "#PWR09")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 113.03 93.98 90)
+		(mirror x)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "09b2a0c0-c1a1-4a58-8f86-dbc430fd32d6")
+		(property "Reference" "R5"
+			(at 113.03 100.33 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "330"
+			(at 113.03 97.79 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 113.03 92.202 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 113.03 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 113.03 93.98 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "d480fc53-4f3a-4093-8b0b-611b3fe7e753")
+		)
+		(pin "1"
+			(uuid "54a7ff17-51ef-4046-bce5-68050303f6b9")
+		)
+		(instances
+			(project "MotorBoard"
+				(path "/ede9d1bf-2106-4e33-ad7f-7bde62847eae"
+					(reference "R5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 113.03 83.82 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "0fb1b469-ff94-4c57-a0f7-596c8dca00b2")
+		(property "Reference" "R3"
+			(at 113.03 77.47 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "330"
+			(at 113.03 80.01 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 113.03 85.598 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 113.03 83.82 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 113.03 83.82 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "2fac80df-d33a-4687-8eea-723497c755cf")
+		)
+		(pin "1"
+			(uuid "ae056e1d-f3b3-44ba-a63f-96265d2d8030")
+		)
+		(instances
+			(project "MotorBoard"
+				(path "/ede9d1bf-2106-4e33-ad7f-7bde62847eae"
+					(reference "R3")
 					(unit 1)
 				)
 			)
@@ -4122,6 +4399,85 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R")
+		(at 113.03 86.36 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "8a23646d-ac48-4431-a9c4-fe239baa94af")
+		(property "Reference" "R4"
+			(at 113.03 80.01 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "330"
+			(at 113.03 82.55 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 113.03 88.138 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 113.03 86.36 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 113.03 86.36 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "9319e406-887e-4f92-ae7c-1c875ec8576c")
+		)
+		(pin "1"
+			(uuid "610a9b68-cc80-4b2e-be3d-3cca25423f40")
+		)
+		(instances
+			(project "MotorBoard"
+				(path "/ede9d1bf-2106-4e33-ad7f-7bde62847eae"
+					(reference "R4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Connector_Generic:Conn_01x04")
 		(at 139.7 43.18 0)
 		(unit 1)
@@ -4936,6 +5292,86 @@
 			(project "MotorBoard"
 				(path "/ede9d1bf-2106-4e33-ad7f-7bde62847eae"
 					(reference "R1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 113.03 96.52 90)
+		(mirror x)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "cc3cc9cf-2325-44c9-8ba6-cda84600ab78")
+		(property "Reference" "R6"
+			(at 113.03 102.87 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "330"
+			(at 113.03 100.33 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 113.03 94.742 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 113.03 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 113.03 96.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "da623cae-a983-48fe-8ec4-5fdfd12b8bb4")
+		)
+		(pin "1"
+			(uuid "e23e6287-15a5-401b-bf30-14ec370d50e4")
+		)
+		(instances
+			(project "MotorBoard"
+				(path "/ede9d1bf-2106-4e33-ad7f-7bde62847eae"
+					(reference "R6")
 					(unit 1)
 				)
 			)

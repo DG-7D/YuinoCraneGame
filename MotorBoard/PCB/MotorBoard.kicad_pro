@@ -172,6 +172,7 @@
         {
           "td_allow_use_two_tracks": true,
           "td_curve_segcount": 0,
+          "td_enabled": false,
           "td_height_ratio": 1.0,
           "td_length_ratio": 0.5,
           "td_maxheight": 2.0,
@@ -183,6 +184,7 @@
         {
           "td_allow_use_two_tracks": true,
           "td_curve_segcount": 0,
+          "td_enabled": false,
           "td_height_ratio": 1.0,
           "td_length_ratio": 0.5,
           "td_maxheight": 2.0,
@@ -194,6 +196,7 @@
         {
           "td_allow_use_two_tracks": true,
           "td_curve_segcount": 0,
+          "td_enabled": false,
           "td_height_ratio": 1.0,
           "td_length_ratio": 0.5,
           "td_maxheight": 2.0,
@@ -662,7 +665,7 @@
         "uuid": "ede9d1bf-2106-4e33-ad7f-7bde62847eae"
       }
     ],
-    "used_designators": "#PWR1-23,C1-4,J1-8,R1-2,U1-4",
+    "used_designators": "#PWR1-23,C1-4,J1-8,R1-6,U1-4",
     "variants": []
   },
   "sheets": [
