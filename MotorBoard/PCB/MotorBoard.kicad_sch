@@ -2578,7 +2578,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "XH3"
+		(property "Value" "Socket"
 			(at 142.24 83.8199 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2589,7 +2589,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical"
+		(property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_1x03_P2.54mm_Vertical"
 			(at 139.7 82.55 0)
 			(hide yes)
 			(show_name no)
@@ -4030,7 +4030,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "XH3"
+		(property "Value" "Socket"
 			(at 142.24 96.5199 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4041,7 +4041,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical"
+		(property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_1x03_P2.54mm_Vertical"
 			(at 139.7 95.25 0)
 			(hide yes)
 			(show_name no)
