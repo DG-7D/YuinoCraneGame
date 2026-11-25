@@ -2819,7 +2819,7 @@
 				)
 			)
 		)
-		(property "Value" "330"
+		(property "Value" "1k"
 			(at 113.03 97.79 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2898,7 +2898,7 @@
 				)
 			)
 		)
-		(property "Value" "330"
+		(property "Value" "1k"
 			(at 113.03 80.01 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4419,7 +4419,7 @@
 				)
 			)
 		)
-		(property "Value" "330"
+		(property "Value" "1k"
 			(at 113.03 82.55 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5319,7 +5319,7 @@
 				)
 			)
 		)
-		(property "Value" "330"
+		(property "Value" "1k"
 			(at 113.03 100.33 90)
 			(show_name no)
 			(do_not_autoplace no)
